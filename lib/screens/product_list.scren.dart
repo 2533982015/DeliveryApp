@@ -1,4 +1,5 @@
 import 'package:delivery_app/constants/app.constants.dart';
+import 'package:delivery_app/screens/product.detail.dart';
 import 'package:flutter/material.dart';
 
 class ProductListScreen extends StatelessWidget {
@@ -37,7 +38,9 @@ class ProductListScreen extends StatelessWidget {
           crossAxisCount: 2,
           children: List.generate(10, (index) {
             return GestureDetector(
-                onTap: () {},
+                onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                    builder: (BuildContext context) =>
+                        const ProductDetailScreen())),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(15),
                   child: Container(

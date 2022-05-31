@@ -92,11 +92,9 @@ class HomeScreen extends StatelessWidget {
           crossAxisCount: 2,
           children: List.generate(10, (index) {
             return GestureDetector(
-              onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (BuildContext context) =>
-                        const ProductListScreen()));
-              },
+              onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                  builder: (BuildContext context) =>
+                      const ProductListScreen())),
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
