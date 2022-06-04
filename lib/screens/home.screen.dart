@@ -1,9 +1,13 @@
 import 'package:delivery_app/constants/app.constants.dart';
+import 'package:delivery_app/controllers/home.controller.dart';
+import 'package:delivery_app/models/categorias.model.dart';
+import 'package:delivery_app/models/restaurante.model.dart';
 import 'package:delivery_app/screens/checkout.screen.dart';
 import 'package:delivery_app/screens/product_list.scren.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends GetView<HomeController> {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
@@ -15,8 +19,7 @@ class HomeScreen extends StatelessWidget {
           actions: [
             GestureDetector(
               onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) =>
-                      const CheckoutScreen())),
+                  builder: (BuildContext context) => const CheckoutScreen())),
               child: const Padding(
                   padding: EdgeInsets.all(AppConstants.insetSize),
                   child: Icon(Icons.shopping_cart)),
@@ -69,44 +72,46 @@ class HomeScreen extends StatelessWidget {
             ]),
       );
 
-  Widget _categories() => SizedBox(
+  Widget _categories() => Obx(() => SizedBox(
       height: 20.0,
       child: ListView(
         scrollDirection: Axis.horizontal,
-        children: List.generate(
-            10,
-            (index) => const Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: AppConstants.insetSize,
-                ),
-                child: Text('Categorie name',
-                    style: TextStyle(color: AppConstants.textColorPrimary)))),
-      ));
+        children: controller.categorias
+            .cast<Categoria>()
+            .map((cat) => GestureDetector(
+                  onTap: () => controller.filtrarCategoria(cat.id),
+                  child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: AppConstants.insetSize),
+                      child: Text(cat.nombre,
+                          style: const TextStyle(
+                              color: AppConstants.textColorPrimary))),
+                ))
+            .toList(),
+      )));
 
-  Widget _restaurants(BuildContext context) => Expanded(
-        child: GridView.count(
+  Widget _restaurants(BuildContext context) => Obx(
+        () => Expanded(
+            child: GridView.count(
           padding:
               const EdgeInsets.symmetric(horizontal: AppConstants.insetSize),
           mainAxisSpacing: AppConstants.insetSize,
           crossAxisSpacing: AppConstants.insetSize,
           scrollDirection: Axis.vertical,
           crossAxisCount: 2,
-          children: List.generate(10, (index) {
-            return GestureDetector(
-              onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) =>
-                      const ProductListScreen())),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  image: const DecorationImage(
-                      image: NetworkImage(
-                          "https://scontent.fsal1-1.fna.fbcdn.net/v/t39.30808-6/284007749_4878752012235506_8303324042213146289_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=730e14&_nc_ohc=5NhzR2crDcsAX-IPAJU&_nc_ht=scontent.fsal1-1.fna&oh=00_AT-FxZCWzFRdLw1bgzpIxMH0uPfTTGetyvSTdn_BEqKv2A&oe=629A2C9E"),
-                      fit: BoxFit.cover),
-                ),
-              ),
-            );
-          }),
-        ),
+          children: controller.restaurantes
+              .cast<Restaurante>()
+              .map((res) => GestureDetector(
+                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                      builder: (BuildContext context) =>
+                          const ProductListScreen())),
+                  child: Container(
+                      decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    image: DecorationImage(
+                        image: NetworkImage(res.imagen), fit: BoxFit.cover),
+                  ))))
+              .toList(),
+        )),
       );
 }
