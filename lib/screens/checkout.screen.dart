@@ -1,10 +1,10 @@
-import 'dart:ui';
-
 import 'package:delivery_app/constants/app.constants.dart';
+import 'package:delivery_app/controllers/order.controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
-class CheckoutScreen extends StatelessWidget {
+class CheckoutScreen extends GetView<OrderController> {
   const CheckoutScreen({Key? key}) : super(key: key);
 
   @override
@@ -20,88 +20,56 @@ class CheckoutScreen extends StatelessWidget {
     );
   }
 
-  Widget _items() => SizedBox(
+  Widget _items() => Obx(() => SizedBox(
         height: 60.h,
         child: ListView(
           scrollDirection: Axis.vertical,
           shrinkWrap: true,
-          children: [
-            ListTile(
-              leading: Image.network(
-                  'https://s7d1.scene7.com/is/image/mcdonalds/t-mcdonalds-Hamburger:1-3-product-tile-desktop?wid=829&hei=515&dpr=off'),
-              title: const Text('Nombre de producto'),
-              subtitle: const Text('2'),
-              trailing: const Text('15.00'),
-            ),
-            ListTile(
-              leading: Image.network(
-                  'https://s7d1.scene7.com/is/image/mcdonalds/t-mcdonalds-Hamburger:1-3-product-tile-desktop?wid=829&hei=515&dpr=off'),
-              title: const Text('Nombre de producto'),
-              subtitle: const Text('2'),
-              trailing: const Text('15.00'),
-            ),
-            ListTile(
-              leading: Image.network(
-                  'https://s7d1.scene7.com/is/image/mcdonalds/t-mcdonalds-Hamburger:1-3-product-tile-desktop?wid=829&hei=515&dpr=off'),
-              title: const Text('Nombre de producto'),
-              subtitle: const Text('2'),
-              trailing: const Text('15.00'),
-            ),
-            ListTile(
-              leading: Image.network(
-                  'https://s7d1.scene7.com/is/image/mcdonalds/t-mcdonalds-Hamburger:1-3-product-tile-desktop?wid=829&hei=515&dpr=off'),
-              title: const Text('Nombre de producto'),
-              subtitle: const Text('2'),
-              trailing: const Text('15.00'),
-            ),
-            ListTile(
-              leading: Image.network(
-                  'https://s7d1.scene7.com/is/image/mcdonalds/t-mcdonalds-Hamburger:1-3-product-tile-desktop?wid=829&hei=515&dpr=off'),
-              title: const Text('Nombre de producto'),
-              subtitle: const Text('2'),
-              trailing: const Text('15.00'),
-            ),
-            ListTile(
-              leading: Image.network(
-                  'https://s7d1.scene7.com/is/image/mcdonalds/t-mcdonalds-Hamburger:1-3-product-tile-desktop?wid=829&hei=515&dpr=off'),
-              title: const Text('Nombre de producto'),
-              subtitle: const Text('2'),
-              trailing: const Text('15.00'),
-            ),
-          ],
+          children: controller.orden.items
+              .map(
+                (item) => ListTile(
+                  leading: Image.network(item.imagen),
+                  title: Text(item.nombre),
+                  subtitle: Text(item.cantidad.toString()),
+                  trailing: Text("${item.precio * item.cantidad}"),
+                ),
+              )
+              .toList(),
         ),
-      );
+      ));
 
-  Widget _total() => Padding(
-        padding: const EdgeInsets.all(AppConstants.insetSize),
-        child: Wrap(
-          children: [
-            Divider(),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                  vertical: AppConstants.insetSize * 1.5),
-              child: Table(
-                children: [
-                  TableRow(children: [
-                    Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [Text('Total a pagar')]),
-                    Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [Text('55.00')]),
-                  ]),
-                ],
+  Widget _total() => Obx(
+        () => Padding(
+          padding: const EdgeInsets.all(AppConstants.insetSize),
+          child: Wrap(
+            children: [
+              const Divider(),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                    vertical: AppConstants.insetSize * 1.5),
+                child: Table(
+                  children: [
+                    TableRow(children: [
+                      Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: const [Text('Total a pagar')]),
+                      Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [Text(controller.monto.toString())]),
+                    ]),
+                  ],
+                ),
               ),
-            ),
-            Divider(),
-            SizedBox(
-              width: 100.w,
-              child: ElevatedButton.icon(
-                  onPressed: () => {},
-                  icon: const Icon(Icons.check),
-                  label: const Text('Aceptar')),
-            ),
-          ],
+              const Divider(),
+              SizedBox(
+                width: 100.w,
+                child: ElevatedButton.icon(
+                    onPressed: () => {},
+                    icon: const Icon(Icons.check),
+                    label: const Text('Aceptar')),
+              ),
+            ],
+          ),
         ),
       );
 }

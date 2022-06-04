@@ -1,3 +1,4 @@
+import 'package:delivery_app/bindings/order_binding.dart';
 import 'package:delivery_app/constants/app.constants.dart';
 import 'package:delivery_app/controllers/home.controller.dart';
 import 'package:delivery_app/models/categorias.model.dart';
@@ -18,8 +19,8 @@ class HomeScreen extends GetView<HomeController> {
           backgroundColor: AppConstants.primaryColor,
           actions: [
             GestureDetector(
-              onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => const CheckoutScreen())),
+              onTap: () =>
+                  Get.to(() => const CheckoutScreen(), binding: OrderBinding()),
               child: const Padding(
                   padding: EdgeInsets.all(AppConstants.insetSize),
                   child: Icon(Icons.shopping_cart)),

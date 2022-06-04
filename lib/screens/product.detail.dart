@@ -1,11 +1,13 @@
+import 'package:delivery_app/controllers/order.controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinbox/flutter_spinbox.dart';
+import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
 import 'package:delivery_app/constants/app.constants.dart';
 import 'package:delivery_app/models/restaurante.model.dart';
 
-class ProductDetailScreen extends StatelessWidget {
+class ProductDetailScreen extends GetView<OrderController> {
   const ProductDetailScreen({
     Key? key,
     required this.producto,
@@ -73,7 +75,7 @@ class ProductDetailScreen extends StatelessWidget {
                 min: 1,
                 max: 100,
                 value: 1,
-                onChanged: (value) {},
+                onChanged: (value) => controller.cantidad = value.toInt(),
               ),
             ),
           ],
@@ -86,7 +88,8 @@ class ProductDetailScreen extends StatelessWidget {
           child: SizedBox(
             width: 100.w,
             child: ElevatedButton.icon(
-                onPressed: () => {},
+                onPressed: () =>
+                    controller.addItem(producto.id, controller.cantidad, producto.nombre, producto.imagen, producto.precio),
                 icon: const Icon(Icons.add_shopping_cart),
                 label: const Text('Añadir')),
           ),

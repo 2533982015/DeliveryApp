@@ -1,7 +1,9 @@
+import 'package:delivery_app/bindings/order_binding.dart';
 import 'package:delivery_app/constants/app.constants.dart';
 import 'package:delivery_app/models/restaurante.model.dart';
 import 'package:delivery_app/screens/product.detail.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ProductListScreen extends StatelessWidget {
   final Restaurante restaurante;
@@ -42,9 +44,9 @@ class ProductListScreen extends StatelessWidget {
             crossAxisCount: 2,
             children: restaurante.products
                 .map((pro) => GestureDetector(
-                    onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                        builder: (BuildContext context) =>
-                            ProductDetailScreen(producto: pro))),
+                    onTap: () => Get.to(
+                        () => ProductDetailScreen(producto: pro),
+                        binding: OrderBinding()),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(15),
                       child: Container(
