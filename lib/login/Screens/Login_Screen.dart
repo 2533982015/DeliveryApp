@@ -1,12 +1,18 @@
-import 'package:delivery_app/login/Component/button.dart';
-import 'package:delivery_app/screens/home.screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
+
+import 'package:delivery_app/bindings/home_binding.dart';
+import 'package:delivery_app/login/Component/button.dart';
+import 'package:delivery_app/screens/home.screen.dart';
+
 import '../constants.dart';
 import 'Register_Screen.dart';
 
 class LoginScreen extends StatefulWidget {
+  const LoginScreen({Key? key}) : super(key: key);
+
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -22,7 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: isloading
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(),
             )
           : Form(
@@ -34,21 +40,21 @@ class _LoginScreenState extends State<LoginScreen> {
                     Container(
                       height: double.infinity,
                       width: double.infinity,
-                      color: Color.fromARGB(255, 255, 255, 255),
+                      color: const Color.fromARGB(255, 255, 255, 255),
                       child: SingleChildScrollView(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 25, vertical: 120),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 25, vertical: 120),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
+                            const Text(
                               "Iniciar sesion",
                               style: TextStyle(
                                   fontSize: 50,
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold),
                             ),
-                            SizedBox(height: 30),
+                            const SizedBox(height: 30),
                             TextFormField(
                               keyboardType: TextInputType.emailAddress,
                               onChanged: (value) {
@@ -58,23 +64,25 @@ class _LoginScreenState extends State<LoginScreen> {
                                 if (value!.isEmpty) {
                                   return "Por favor ingrese correo electrónico";
                                 }
+                                return null;
                               },
                               textAlign: TextAlign.center,
                               decoration: kTextFieldDecoration.copyWith(
                                 hintText: 'Correo electrónico',
-                                prefixIcon: Icon(
+                                prefixIcon: const Icon(
                                   Icons.email,
                                   color: Colors.black,
                                 ),
                               ),
                             ),
-                            SizedBox(height: 30),
+                            const SizedBox(height: 30),
                             TextFormField(
                               obscureText: true,
                               validator: (value) {
                                 if (value!.isEmpty) {
                                   return "Por favor, ingrese contraseña";
                                 }
+                                return null;
                               },
                               onChanged: (value) {
                                 password = value;
@@ -82,12 +90,12 @@ class _LoginScreenState extends State<LoginScreen> {
                               textAlign: TextAlign.center,
                               decoration: kTextFieldDecoration.copyWith(
                                   hintText: 'Contraseña',
-                                  prefixIcon: Icon(
+                                  prefixIcon: const Icon(
                                     Icons.lock,
                                     color: Colors.black,
                                   )),
                             ),
-                            SizedBox(height: 80),
+                            const SizedBox(height: 80),
                             LoginSignupButton(
                               title: 'Entrar',
                               ontapp: () async {
@@ -99,11 +107,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                     await _auth.signInWithEmailAndPassword(
                                         email: email, password: password);
 
-                                    await Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (contex) => HomeScreen(),
-                                      ),
-                                    );
+                                    Get.to(() => const HomeScreen(),
+                                        binding: HomeBinding());
 
                                     setState(() {
                                       isloading = false;
@@ -112,7 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     showDialog(
                                       context: context,
                                       builder: (ctx) => AlertDialog(
-                                        title: Text(
+                                        title: const Text(
                                             "Ops! Error de inicio de sesion"),
                                         content: Text('${e.message}'),
                                         actions: [
@@ -120,12 +125,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                             onPressed: () {
                                               Navigator.of(ctx).pop();
                                             },
-                                            child: Text('Ok'),
+                                            child: const Text('Ok'),
                                           )
                                         ],
                                       ),
                                     );
-                                    print(e);
                                   }
                                   setState(() {
                                     isloading = false;
@@ -133,7 +137,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 }
                               },
                             ),
-                            SizedBox(height: 30),
+                            const SizedBox(height: 30),
                             GestureDetector(
                               onTap: () {
                                 Navigator.of(context).push(
@@ -143,7 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 );
                               },
                               child: Row(
-                                children: [
+                                children: const [
                                   Text(
                                     "No tienes cuenta ?",
                                     style: TextStyle(
@@ -151,9 +155,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                   SizedBox(width: 10),
                                   Hero(
-                                    tag: '1',
+                                    tag: "1",
                                     child: Text(
-                                      'Registrarse',
+                                      "Registrarse",
                                       style: TextStyle(
                                           fontSize: 21,
                                           fontWeight: FontWeight.bold,
