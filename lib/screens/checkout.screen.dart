@@ -15,6 +15,7 @@ class CheckoutScreen extends GetView<OrderController> {
         backgroundColor: AppConstants.primaryColor,
       ),
       body: Column(
+        
         children: [_items(), _total()],
       ),
     );
@@ -64,7 +65,8 @@ class CheckoutScreen extends GetView<OrderController> {
               SizedBox(
                 width: 100.w,
                 child: ElevatedButton.icon(
-                    onPressed: () => {},
+                    onPressed: () =>
+                        controller.confirmOrder(controller.orden.id),
                     icon: const Icon(Icons.check),
                     label: const Text('Aceptar')),
               ),

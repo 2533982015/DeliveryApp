@@ -1,10 +1,12 @@
 import 'package:delivery_app/bindings/order_binding.dart';
+import 'package:delivery_app/bindings/profile_binding.dart';
 import 'package:delivery_app/constants/app.constants.dart';
 import 'package:delivery_app/controllers/home.controller.dart';
 import 'package:delivery_app/models/categorias.model.dart';
 import 'package:delivery_app/models/restaurante.model.dart';
 import 'package:delivery_app/screens/checkout.screen.dart';
 import 'package:delivery_app/screens/product_list.scren.dart';
+import 'package:delivery_app/screens/profile.screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -15,18 +17,24 @@ class HomeScreen extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          elevation: 0,
-          backgroundColor: AppConstants.primaryColor,
-          actions: [
-            GestureDetector(
-              onTap: () =>
-                  Get.to(() => const CheckoutScreen(), binding: OrderBinding()),
+            elevation: 0,
+            backgroundColor: AppConstants.primaryColor,
+            leading: GestureDetector(
+              onTap: () => Get.to(() => const ProfileScreen(),
+                  binding: ProfileBinding()),
               child: const Padding(
                   padding: EdgeInsets.all(AppConstants.insetSize),
-                  child: Icon(Icons.shopping_cart)),
-            )
-          ],
-        ),
+                  child: Icon(Icons.person)),
+            ),
+            actions: [
+              GestureDetector(
+                onTap: () => Get.to(() => const CheckoutScreen(),
+                    binding: OrderBinding()),
+                child: const Padding(
+                    padding: EdgeInsets.all(AppConstants.insetSize),
+                    child: Icon(Icons.shopping_cart)),
+              )
+            ]),
         body: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
