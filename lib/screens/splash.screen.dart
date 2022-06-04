@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:delivery_app/constants/app.constants.dart';
+import 'package:delivery_app/login/Screens/Login_Screen.dart';
 import 'package:delivery_app/screens/home.screen.dart';
 import 'package:flutter/material.dart';
 
@@ -16,8 +17,8 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     Timer(
       const Duration(seconds: 3),
-      () => Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (BuildContext context) => const HomeScreen())),
+      () => Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (BuildContext context) => LoginScreen())),
     );
 
     return Container(

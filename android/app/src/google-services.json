@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "119463980985",
+    "project_id": "appdeliveryy-afe34",
+    "storage_bucket": "appdeliveryy-afe34.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:119463980985:android:29aa80edd45d5853ac9068",
+        "android_client_info": {
+          "package_name": "com.example.delivery_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "119463980985-8op01iak7nsqmipv42ddd05m96bjguba.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwtcp94SciO29iUWNEXa8BO3ptd0pN8Bk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "119463980985-8op01iak7nsqmipv42ddd05m96bjguba.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
