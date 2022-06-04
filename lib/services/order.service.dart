@@ -1,4 +1,5 @@
 import 'package:delivery_app/app_util.dart';
+import 'package:delivery_app/models/order.history.model.dart';
 import 'package:delivery_app/models/order.model.dart';
 
 class OrderService {
@@ -19,5 +20,19 @@ class OrderService {
         endpoint:
             'https://data.mongodb-api.com/app/delivery_app-ennhb/endpoint/getorderactive?usuario=jose');
     return orderFromJson(response);
+  }
+
+  Future<bool> confirmOrder(String orden) async {
+    final response = await AppUtils.sendRequest(
+        endpoint:
+            'https://data.mongodb-api.com/app/delivery_app-ennhb/endpoint/confimorder?orden=$orden');
+    return response == "Ok";
+  }
+
+  Future<List<OrderHistory>> historial() async {
+    final response = await AppUtils.sendRequest(
+        endpoint:
+            'https://data.mongodb-api.com/app/delivery_app-ennhb/endpoint/ordershistory?usuario=jose');
+    return orderHistoryFromJson(response);
   }
 }

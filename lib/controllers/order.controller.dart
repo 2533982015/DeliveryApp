@@ -1,4 +1,6 @@
+import 'package:delivery_app/bindings/home_binding.dart';
 import 'package:delivery_app/models/order.model.dart';
+import 'package:delivery_app/screens/home.screen.dart';
 import 'package:delivery_app/services/order.service.dart';
 import 'package:get/get.dart';
 
@@ -39,5 +41,10 @@ class OrderController extends GetxController {
     for (var item in orden.items) {
       monto += item.cantidad * item.precio;
     }
+  }
+
+  Future<void> confirmOrder(String orden) async {
+    orderService.confirmOrder(orden);
+    Get.off(() => const HomeScreen(), binding: HomeBinding());
   }
 }
