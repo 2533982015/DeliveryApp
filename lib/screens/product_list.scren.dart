@@ -1,21 +1,25 @@
 import 'package:delivery_app/constants/app.constants.dart';
+import 'package:delivery_app/models/restaurante.model.dart';
 import 'package:delivery_app/screens/product.detail.dart';
 import 'package:flutter/material.dart';
 
 class ProductListScreen extends StatelessWidget {
-  const ProductListScreen({Key? key}) : super(key: key);
+  final Restaurante restaurante;
+
+  const ProductListScreen({Key? key, required this.restaurante})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppConstants.primaryColor,
-        title: const Text('Burguer king'),
+        title: Text(restaurante.nombre),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          title('productos de restaurante'),
+          title('Productos de restaurante'),
           _products(context),
         ],
       ),
@@ -30,40 +34,38 @@ class ProductListScreen extends StatelessWidget {
 
   Widget _products(BuildContext context) => Expanded(
         child: GridView.count(
-          padding:
-              const EdgeInsets.symmetric(horizontal: AppConstants.insetSize),
-          mainAxisSpacing: AppConstants.insetSize,
-          crossAxisSpacing: AppConstants.insetSize,
-          scrollDirection: Axis.vertical,
-          crossAxisCount: 2,
-          children: List.generate(10, (index) {
-            return GestureDetector(
-                onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                    builder: (BuildContext context) =>
-                        const ProductDetailScreen())),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(15),
-                  child: Container(
-                    color: AppConstants.whiteColor,
-                    child: Column(
-                      children: [
-                        Image.network(
-                            'https://s7d1.scene7.com/is/image/mcdonalds/t-mcdonalds-Hamburger:1-3-product-tile-desktop?wid=829&hei=515&dpr=off'),
-                        const SizedBox(height: AppConstants.insetSize),
-                        const Text('nombre de producto',
-                            style: TextStyle(
-                                color: AppConstants.textColorPrimary)),
-                        const Text(
-                          '10.00',
-                          style: TextStyle(
-                              color: AppConstants.textColorPrimary,
-                              fontWeight: FontWeight.bold),
+            padding:
+                const EdgeInsets.symmetric(horizontal: AppConstants.insetSize),
+            mainAxisSpacing: AppConstants.insetSize,
+            crossAxisSpacing: AppConstants.insetSize,
+            scrollDirection: Axis.vertical,
+            crossAxisCount: 2,
+            children: restaurante.products
+                .map((pro) => GestureDetector(
+                    onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            ProductDetailScreen(producto: pro))),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(15),
+                      child: Container(
+                        color: AppConstants.whiteColor,
+                        child: Column(
+                          children: [
+                            Image.network(pro.imagen),
+                            const SizedBox(height: AppConstants.insetSize),
+                            Text(pro.nombre,
+                                style: const TextStyle(
+                                    color: AppConstants.textColorPrimary)),
+                            Text(
+                              pro.precio.toString(),
+                              style: const TextStyle(
+                                  color: AppConstants.textColorPrimary,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ),
-                ));
-          }),
-        ),
+                      ),
+                    )))
+                .toList()),
       );
 }

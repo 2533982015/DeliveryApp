@@ -102,9 +102,8 @@ class HomeScreen extends GetView<HomeController> {
           children: controller.restaurantes
               .cast<Restaurante>()
               .map((res) => GestureDetector(
-                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                          const ProductListScreen())),
+                  onTap: () =>
+                      Get.to(() => ProductListScreen(restaurante: res)),
                   child: Container(
                       decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),

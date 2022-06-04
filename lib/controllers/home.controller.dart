@@ -26,7 +26,7 @@ class HomeController extends GetxController {
   }
 
   Future<void> getCategorias() async {
-    var categoriasData = await restauranteService.getListCatgeorias();
+    var categoriasData = await restauranteService.getCategorias();
     categoriasData.insert(0, Categoria(id: '', nombre: 'Todos'));
     categorias = categoriasData;
   }

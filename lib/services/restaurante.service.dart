@@ -10,7 +10,7 @@ class RestauranteService {
     return restaurantesFromJson(response);
   }
 
-  Future<List<Categoria>> getListCatgeorias() async {
+  Future<List<Categoria>> getCategorias() async {
     final response = await AppUtils.sendRequest(
         endpoint:
             'https://data.mongodb-api.com/app/delivery_app-ennhb/endpoint/categorias');
