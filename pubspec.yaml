@@ -38,6 +38,8 @@ dependencies:
   sizer: ^2.0.15
   http: ^0.13.4
   get: ^4.6.5
+  firebase_auth: ^3.3.19
+  firebase_core: ^1.4.0
 
 dev_dependencies:
   flutter_test:
